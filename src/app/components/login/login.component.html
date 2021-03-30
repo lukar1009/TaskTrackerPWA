@@ -1,0 +1,21 @@
+<div class="row justify-content-center">
+    <div class="col-7 rounded">
+        <div class="card">
+            <div class="card-body shadow">
+                <h3 class="card-title text-center">Please, login!</h3>
+                <h4 class="card-subtitle mb-4 text-muted text-center">In order to use the application, you must enter your credentials.</h4>
+                <div class="row">
+                    <div class="col-12 row justify-content-center">
+                        <dx-text-box class="col-6 mb-2" [(value)]="user.email" placeholder="Enter your e-mail" showClearButton="true"></dx-text-box>
+                    </div>
+                    <div class="col-12 row justify-content-center">
+                        <dx-text-box class="col-6 mb-2" [(value)]="user.password" placeholder="Enter your password" mode="password" showClearButton="true"></dx-text-box>
+                    </div>
+                    <div class="col-8 row justify-content-end">
+                        <dx-button class="col-5 mb-2 font-weight-bold" (onClick)="login()" text="Sign in!" icon="todo"></dx-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<dx-popup [width]="500"
+          [height]="380"
+          [showTitle]="true"
+          title="Add New Task"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          visible="true"
+          (onHiding)="onClose($event)"
+          (onHidden)="onClose($event)">
+    <div *dxTemplate="let data of 'content'">
+        <dx-scroll-view width="100%" height="100%">
+            <div class="row">
+                <label class="col-4 mt-1">Task Title: </label>
+                <dx-text-box class="col-6 mb-2" [(value)]="task.title" placeholder="Enter task title..." showClearButton="true"></dx-text-box>
+            </div>
+            <div class="row">
+                <label class="col-4 mt-1">Task Description: </label>
+                <dx-text-box class="col-6 mb-2" [(value)]="task.description" placeholder="Enter task description..." showClearButton="true"></dx-text-box>
+            </div>
+            <div class="row">
+                <label class="col-4 mt-1">Estimated time: </label>
+                <dx-text-box class="col-6 mb-2" [(value)]="task.estimatedTime" placeholder="Enter estimated time..." showClearButton="true"></dx-text-box>
+            </div>
+            <div class="row">
+                <label class="col-4 mt-1">Task Status: </label>
+                <dx-select-box class="col-6 mb-2" 
+                               [dataSource]="statusList" 
+                               valueExpr="id"
+                               displayExpr="name"
+                               [(value)]="choosenTaskStatusId"
+                               (onValueChanged)="onTaskStatusValueChange($event)" 
+                               placeholder="Choose task status..."></dx-select-box>
+            </div>
+            <div class="row">
+                <label class="col-4 mt-1">Parent project: </label>
+                <dx-select-box class="col-6 mb-2" 
+                               [dataSource]="projectsList" 
+                               valueExpr="id"
+                               displayExpr="name"
+                               [(value)]="choosenProjectId"
+                               (onValueChanged)="onProjectValueChange($event)"
+                               placeholder="Choose parent project..."></dx-select-box>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-6 text-right p-0">
+                    <dx-button (onClick)="insertTask()" text="Save!" icon="todo"></dx-button>
+                </div>
+            </div>
+        </dx-scroll-view>
+    </div>
+</dx-popup>
