@@ -1,5 +1,5 @@
 <dx-popup [width]="500"
-          [height]="380"
+          [height]="450"
           [showTitle]="true"
           title="Add New Task"
           [dragEnabled]="false"
@@ -41,6 +41,29 @@
                                (onValueChanged)="onProjectValueChange($event)"
                                placeholder="Choose parent project..."></dx-select-box>
             </div>
+
+            <div class="row">
+                <label class="col-4 mt-1">Developer: </label>
+                <dx-select-box class="col-6 mb-2" 
+                               [dataSource]="userList" 
+                               valueExpr="id"
+                               displayExpr="name"
+                               [(value)]="choosenDeveloperId"
+                               (onValueChanged)="onDeveloperValueChange($event)"
+                               placeholder="Choose Developer..."></dx-select-box>
+            </div>
+
+            <div class="row">
+                <label class="col-4 mt-1">Scrum Master: </label>
+                <dx-select-box class="col-6 mb-2" 
+                               [dataSource]="userList" 
+                               valueExpr="id"
+                               displayExpr="name"
+                               [(value)]="choosenScrumMasterId"
+                               (onValueChanged)="onScrumMasterValueChange($event)"
+                               placeholder="Choose Scrum Master..."></dx-select-box>
+            </div>
+
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-6 text-right p-0">

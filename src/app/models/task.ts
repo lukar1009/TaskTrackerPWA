@@ -7,4 +7,6 @@ export class Task {
     estimatedTime: number;
     timeSpent: number;
     taskStatus: TaskStatus = new TaskStatus();
+    assignedDeveloperId: number;
+    scrumMasterId: number;
 }

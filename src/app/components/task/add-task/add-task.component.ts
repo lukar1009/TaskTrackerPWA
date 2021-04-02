@@ -9,6 +9,7 @@ import { DataService } from "src/app/services/data.service";
 import { NotificationsService } from "src/app/services/notifications.service";
 import { ProjectsService } from "src/app/services/projects.service";
 import { TaskService } from "src/app/services/tasks.service";
+import { UsersService } from "src/app/services/users.service";
 
 @Component({
     selector: "app-add-task",
@@ -23,10 +24,14 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public task: Task = new Task();
     public choosenProjectId: number;
     public choosenTaskStatusId: number;
+    public choosenDeveloperId: number;
+    public choosenScrumMasterId: number;
     public projectsList: Project[] = [];
     public statusList: TaskStatus[] = [];
+    public userList: User[] = [];
     public projectsLoaded: boolean = false;
     public statusesLoaded: boolean = false;
+    public usersLoaded: boolean = false;
 
     private loggedUserSubscription: Subscription;
 
@@ -34,13 +39,15 @@ export class AddTaskComponent implements OnInit, OnDestroy {
                 private notificationService: NotificationsService,
                 private taskService: TaskService,
                 private dataService: DataService,
-                private swPush: SwPush) { }
+                private swPush: SwPush,
+                private userService: UsersService) { }
 
     ngOnInit(): void {
         this.loggedUserSubscription = this.dataService.loggedUser.subscribe(user => {
             this.user = user;
         });
 
+        this.getAllUsers();
         this.getAllProjects();
         this.getAllStatuses();
     }
@@ -65,6 +72,14 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         })
     }
 
+    getAllUsers() {
+        this.userService.getAllUsers().then(users => {
+            this.userList = users;
+        }).finally(() => {
+            this.usersLoaded = true;
+        })
+    }
+
     onProjectValueChange(e) {
         this.choosenProjectId = +e.value;
     }
@@ -73,6 +88,16 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.choosenTaskStatusId = +e.value;
         this.task.taskStatus = new TaskStatus();
         this.statusList.forEach(x => this.task.taskStatus = x);
+    }
+
+    onDeveloperValueChange(e) {
+        this.choosenDeveloperId = +e.value;
+        this.task.assignedDeveloperId = this.choosenDeveloperId;
+    }
+
+    onScrumMasterValueChange(e) {
+        this.choosenScrumMasterId = +e.value;
+        this.task.scrumMasterId = this.choosenScrumMasterId;
     }
 
     onClose(e) {
@@ -102,6 +127,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
                 // body.sub = sub;
                 let body = {
                     userId: this.user.id,
+                    developerId: this.choosenDeveloperId,
+                    scrumMasterId: this.choosenScrumMasterId,
                     sub: sub
                 }
                 this.notificationService.showNotification(body).subscribe();
